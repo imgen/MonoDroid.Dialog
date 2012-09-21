@@ -14,13 +14,6 @@ namespace MonoDroid.Dialog
 {
 	public class DialogActivity : ListActivity
 	{
-		public DialogActivity(RootElement root)
-			: base()
-		{
-			this.Root = root;
-			this.DialogAdapter = new DialogAdapter(this, root);
-		}
-
 		public RootElement Root
 		{
 			get;
@@ -33,10 +26,17 @@ namespace MonoDroid.Dialog
 			private set;
 		}
 
+        /// <summary>
+        /// A callback which is called when the activity is being created.
+        /// Subclass's corresponding method needs to call OnCreate after the initialzation of Root property
+        /// </summary>
+        /// <param name='savedInstanceState'>
+        /// Saved instance state.
+        /// </param>
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-
+            this.DialogAdapter = new DialogAdapter(this, Root);
 			this.ListAdapter = this.DialogAdapter;
             this.ListView.ItemClick += ListView_ItemClick;
 			this.ListView.ItemLongClick += ListView_ItemLongClick;
